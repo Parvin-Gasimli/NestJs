@@ -42,10 +42,9 @@ export class TasksController {
     deleteTask(@Param("id") id: string): void {
         this.tasksService.deleteTask(id);
     }
-    // @Patch('/:id/status')
-    // updateTaskStatus(@Param("id") id: string, @Body() UpdateTaskDto: UpdateTaskDto): Task {
-    //     const { status } = UpdateTaskDto;
-    //     return this.tasksService.updateTaskStatus(id, status);
-
-    // }
+    @Patch('/:id/status')
+    updateTaskStatus(@Param("id") id: string, @Body() UpdateTaskDto: UpdateTaskDto): Task {
+        const { status } = UpdateTaskDto;
+        return this.tasksService.updateTaskStatus(id, status);
+    }
 }

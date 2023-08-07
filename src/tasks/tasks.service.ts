@@ -70,12 +70,12 @@ export class TasksService {
         return;
 
     }
-    // updateTaskStatus(id: string, status: TaskStatus): Task {
-    //     const task = this.getTaskById(id);
-    //     if (!task) {
-    //         throw new NotFoundException('Task not found');
-    //     }
-    //     task.status = status;
-    //     return task;
-    // }
+    async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+        const task = this.getTaskById(id);
+        if (!task) {
+            throw new NotFoundException('Task not found');
+        }
+        (await task).status = status;
+        return task;
+    }
 }
