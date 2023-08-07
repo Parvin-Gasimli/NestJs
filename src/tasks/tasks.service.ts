@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { TaskRepository } from './tasks.repository';
+import { TasksRepository } from './tasks.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './dto/task.enity';
 import CreateTaskDto from './dto/create-task.dto';
@@ -10,8 +10,8 @@ import { TaskStatus } from './task-status.enum';
 @Injectable()
 export class TasksService {
     constructor(
-        @InjectRepository(TaskRepository)
-        private taskRepository: TaskRepository,
+        @InjectRepository(TasksRepository)
+        private tasksRepository: TasksRepository,
     ) { }
 
     // private tasks: Task[] = [];
@@ -33,16 +33,17 @@ export class TasksService {
     // }
 
     async getTaskById(id: any): Promise<Task> {
-        const found = await this.taskRepository.findOne(id);
+        const found = await this.tasksRepository.findOne(id);
         if (!found) {
             throw new NotFoundException('Task not found');
         }
         return found;
     }
 
-    async createTasks(createTaskDto: CreateTaskDto): Promise<Task> {
-        return this.taskRepository.createTask(createTaskDto);
-    }
+    // async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    //     return this.tasksRepository.createTask(createTaskDto);
+
+    // }
     // eslint-disable-next-line prettier/prettier
     // getTaskById(id: string): Task {
     //     const found = this.tasks.find(task => task.id === id);
@@ -63,7 +64,7 @@ export class TasksService {
     //     return task;
     // }
     async deleteTask(id: string): Promise<void> {
-        const result = await this.taskRepository.delete(id);
+        const result = await this.tasksRepository.delete(id);
         if (result.affected === 0) {
             throw new NotFoundException('Task not found');
         }

@@ -17,7 +17,7 @@ let TasksModule = exports.TasksModule = class TasksModule {
 };
 exports.TasksModule = TasksModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([task_enity_1.Task, tasks_repository_1.TaskRepository])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([task_enity_1.Task, tasks_repository_1.TasksRepository])],
         controllers: [tasks_controller_1.TasksController],
         providers: [tasks_service_1.TasksService],
     })

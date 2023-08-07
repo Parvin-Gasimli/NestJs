@@ -17,21 +17,18 @@ const common_1 = require("@nestjs/common");
 const tasks_repository_1 = require("./tasks.repository");
 const typeorm_1 = require("@nestjs/typeorm");
 let TasksService = exports.TasksService = class TasksService {
-    constructor(taskRepository) {
-        this.taskRepository = taskRepository;
+    constructor(tasksRepository) {
+        this.tasksRepository = tasksRepository;
     }
     async getTaskById(id) {
-        const found = await this.taskRepository.findOne(id);
+        const found = await this.tasksRepository.findOne(id);
         if (!found) {
             throw new common_1.NotFoundException('Task not found');
         }
         return found;
     }
-    async createTasks(createTaskDto) {
-        return this.taskRepository.createTask(createTaskDto);
-    }
     async deleteTask(id) {
-        const result = await this.taskRepository.delete(id);
+        const result = await this.tasksRepository.delete(id);
         if (result.affected === 0) {
             throw new common_1.NotFoundException('Task not found');
         }
@@ -48,7 +45,7 @@ let TasksService = exports.TasksService = class TasksService {
 };
 exports.TasksService = TasksService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(tasks_repository_1.TaskRepository)),
-    __metadata("design:paramtypes", [tasks_repository_1.TaskRepository])
+    __param(0, (0, typeorm_1.InjectRepository)(tasks_repository_1.TasksRepository)),
+    __metadata("design:paramtypes", [tasks_repository_1.TasksRepository])
 ], TasksService);
 //# sourceMappingURL=tasks.service.js.map
