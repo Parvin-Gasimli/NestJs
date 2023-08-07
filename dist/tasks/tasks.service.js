@@ -23,23 +23,23 @@ let TasksService = exports.TasksService = class TasksService {
     async getTaskById(id) {
         const found = await this.tasksRepository.findOne(id);
         if (!found) {
-            throw new common_1.NotFoundException('Task not found');
+            throw new common_1.NotFoundException(`Task with ID "${id}" not found`);
         }
         return found;
+    }
+    createTask(createTaskDto) {
+        return this.tasksRepository.createTask(createTaskDto);
     }
     async deleteTask(id) {
         const result = await this.tasksRepository.delete(id);
         if (result.affected === 0) {
-            throw new common_1.NotFoundException('Task not found');
+            throw new common_1.NotFoundException(`Task with ID "${id}" not found`);
         }
-        return;
     }
     async updateTaskStatus(id, status) {
-        const task = this.getTaskById(id);
-        if (!task) {
-            throw new common_1.NotFoundException('Task not found');
-        }
-        (await task).status = status;
+        const task = await this.getTaskById(id);
+        task.status = status;
+        await this.tasksRepository.save(task);
         return task;
     }
 };
